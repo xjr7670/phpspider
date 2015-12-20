@@ -17,8 +17,17 @@
 	<title>百度网页搜索结果抓取</title>
 	<meta http="Content-Type" content="text/html; charset=utf-8" />
 </head>
+<style type="text/css">
+	td {
+		font-size: 12px;
+	}
+	h3 {
+		margin: 0;
+		padding: 0;
+	}
+</style>
 <body>
-<form action="./spider-1.php" method="post" >
+<form action="./spider2.php" method="post" >
 	输入关键词：<input type="text" name="keyword" />
 	<input type="submit" name="submit" value="提取" />
 </form>
@@ -28,12 +37,16 @@
 
 empty($_POST['keyword'])?"<javascript>alert('请输入关键词');</javascript>" : $keyword = $_POST['keyword'];
 $arr = explode(';', $keyword);
+echo '<table border="1">';
+echo "<tr height=500px>";
+
 foreach ($arr as $key => $value) {
 	if ($_SERVER['REQUEST_METHOD'] == "POST") {
 		$r = new Spider($value);
 	}
 }
 
+echo '</tr></table>';
 
 class Spider {
 
@@ -43,19 +56,11 @@ class Spider {
 		
 		$pattern = '/<h3.*<\/h3>/sU';					// 使用模式修正符s，则模式中的点号元字符将匹配所有字符，包括换行符。U代表禁止贪婪
 		preg_match_all($pattern, $con, $match);
+		echo "<td>$value</td><td>";
 		for ($i = 0; $i < 30; $i++) {
-			echo $i.":".$match[0][$i];
+			echo $match[0][$i];
 		}
-	}
-
-	function show($v) {
-		if (is_array($v)) {
-			echo "<pre>";
-			print_r($v);
-			echo "</pre>";
-		} else {
-			echo $v;
-		}
+		echo "</td>";
 	}
 }
 
