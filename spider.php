@@ -27,7 +27,7 @@
 	}
 </style>
 <body>
-<form action="./spider2.php" method="post" >
+<form action="./spider.php" method="post" >
 	输入关键词：<input type="text" name="keyword" />
 	<input type="submit" name="submit" value="提取" />
 </form>
@@ -35,13 +35,13 @@
 
 <?php
 
-empty($_POST['keyword'])?"<javascript>alert('请输入关键词');</javascript>" : $keyword = $_POST['keyword'];
-$arr = explode(';', $keyword);
+
 echo '<table border="1">';
 echo "<tr height=500px>";
-
-foreach ($arr as $key => $value) {
-	if ($_SERVER['REQUEST_METHOD'] == "POST") {
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+	empty($_POST['keyword'])?"<javascript>alert('请输入关键词');</javascript>" : $keyword = $_POST['keyword'];
+	$arr = explode(';', $keyword);
+	foreach ($arr as $key => $value) {
 		$r = new Spider($value);
 	}
 }
